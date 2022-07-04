@@ -1,0 +1,24 @@
+1. Create N/W
+----------------
+gcloud compute networks create my-custom-nw --subnet-mode=custom
+
+2. Create required Subnets
+-------------------------------------
+gcloud compute networks subnets create central-subnet-1 --range=10.1.0.0/24 --region=us-central1 --network=my-custom-nw
+gcloud compute networks subnets create sing-subnet-2 --range=10.2.0.0/24 --region=asia-southeast1 --network=my-custom-nw
+
+3. Create instances us-central
+--------------------------------------
+gcloud compute instances create c-instance-1 --zone=us-central1-a --subnet=central-subnet-1
+gcloud compute instances create c-instance-2 --zone=us-central1-b --subnet=central-subnet-1 --no-address
+gcloud compute instances create c-instance-3 --zone=us-central1-b --subnet=central-subnet-1 --no-address
+
+4. Create instances singapore
+--------------------------------------
+gcloud compute instances create s-instance-4 --zone=asia-southeast1-b --subnet=sing-subnet-2
+gcloud compute instances create s-instance-5 --zone=asia-southeast1-b --subnet=sing-subnet-2
+
+5. Create Firewalls
+gcloud compute firewall-rules create allow-ssh --direction=INGRESS --priority=1000 --network=my-custom-nw --action=ALLOW --rules=tcp:22 --source-ranges=0.0.0.0/0
+gcloud compute firewall-rules create all-ping --network=my-custom-nw --action=ALLOW --rules=icmp --source-ranges=10.1.0.0/24,10.2.0.0/24
+gcloud compute firewall-rules create deny-secure --priority=1100 --network=my-custom-nw --action=DENY --rules=icmp --source-tags=deny-server --target-tags=secure
