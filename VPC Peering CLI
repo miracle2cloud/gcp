@@ -1,0 +1,16 @@
+#!/bin/bash
+#NW-1 brave-attic-354007
+gcloud compute networks create custom-nw-1 --subnet-mode=custom --project=brave-attic-354007
+gcloud compute networks subnets create c-subnet-1 --range=10.1.0.0/24 --region=us-central1 --network=custom-nw-1 --project=brave-attic-354007
+gcloud compute instances create c-instance-1 --zone=us-central1-a --subnet=c-subnet-1 --project=brave-attic-354007
+gcloud compute --project=brave-attic-354007 firewall-rules create allow-ssh-icmp-1 --direction=INGRESS --priority=1000 --network=custom-nw-1 --action=ALLOW --rules=tcp:22,icmp --source-ranges=0.0.0.0/0
+#NW-2
+gcloud compute networks create custom-nw-2 --subnet-mode=custom --project=brave-attic-354007
+gcloud compute networks subnets create c-subnet-2 --range=10.2.0.0/24 --region=us-central1 --network=custom-nw-2 --project=brave-attic-354007
+gcloud compute instances create c-instance-2 --zone=us-central1-a --subnet=c-subnet-2 --project=brave-attic-354007
+gcloud compute --project=brave-attic-354007 firewall-rules create allow-ssh-icmp-2 --direction=INGRESS --priority=1000 --network=custom-nw-2 --action=ALLOW --rules=tcp:22,icmp --source-ranges=0.0.0.0/0
+#NW-3 dev-apps-123
+gcloud compute networks create custom-nw-3 --subnet-mode=custom --project=dev-apps-123
+gcloud compute networks subnets create s-subnet-3 --range=10.3.0.0/24 --region=asia-southeast1 --network=custom-nw-3 --project=dev-apps-123
+gcloud compute instances create s-instance-3 --zone=asia-southeast1-b --subnet=s-subnet-3 --project=dev-apps-123
+gcloud compute --project=dev-apps-123 firewall-rules create allow-ssh-icmp-3 --direction=INGRESS --priority=1000 --network=custom-nw-3 --action=ALLOW --rules=tcp:22,icmp --source-ranges=0.0.0.0/0
