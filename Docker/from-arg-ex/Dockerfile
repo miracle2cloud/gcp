@@ -1,0 +1,4 @@
+ARG VERSION=8.0.30
+FROM mysql:${VERSION}
+ARG VERSION
+RUN "echo $VERSION" > myfile
