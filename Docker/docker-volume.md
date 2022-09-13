@@ -1,3 +1,8 @@
+docker volume
+    bind/host
+    named volume
+    anonymous volume
+
 1104  docker run -itd -v /usr nginx
  1105  docker container ls
  1106  docker image ls

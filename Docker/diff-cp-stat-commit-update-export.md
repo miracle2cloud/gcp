@@ -1,3 +1,15 @@
+  docker export - commit -> create you image , export  - flat file(archive)
+  docker volume
+
+docker commands
+
+docker diff  --> all changes that you made to docker container
+docker cp - copying files/fS to and fro of the container and VM
+docker stats --> gives you statiscal datq running containers
+docker update -> cpu/mem resources conitainers
+
+  
+  
   900  docker run -t shellapp
   901  docker images
   902  docker run -d my-ubuntu
